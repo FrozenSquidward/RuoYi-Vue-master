@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingfeng.pp.mapper.TSurveyDirectoryMapper">
+
+    <resultMap type="TSurveyDirectory" id="TSurveyDirectoryResult">
+        <result property="id"    column="id"    />
+        <result property="surveyName"    column="survey_name"    />
+        <result property="surveyModel"    column="survey_model"    />
+        <result property="surveyState"    column="survey_state"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sid"    column="sid"    />
+        <result property="anItemLeastNum"    column="an_item_least_num"    />
+        <result property="answerNum"    column="answer_num"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="dirType"    column="dir_type"    />
+        <result property="excerptNum"    column="excerpt_num"    />
+        <result property="htmlPath"    column="html_path"    />
+        <result property="jsonPath"    column="json_path"    />
+        <result property="isShare"    column="is_share"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="surveyDetailId"    column="survey_detail_id"    />
+        <result property="surveyQuNum"    column="survey_qu_num"    />
+        <result property="surveyTag"    column="survey_tag"    />
+        <result property="viewAnswer"    column="view_answer"    />
+        <result property="visibility"    column="visibility"    />
+    </resultMap>
+
+    <sql id="selectTSurveyDirectoryVo">
+        select id, survey_name, survey_model, survey_state, user_id, sid, an_item_least_num, answer_num, create_date, dir_type, excerpt_num, html_path, json_path, is_share, parent_id, survey_detail_id, survey_qu_num, survey_tag, view_answer, visibility from t_survey_directory
+    </sql>
+
+    <select id="selectTSurveyDirectoryList" parameterType="TSurveyDirectory" resultMap="TSurveyDirectoryResult">
+        <include refid="selectTSurveyDirectoryVo"/>
+        <where>
+            <if test="tSurveyDirectory.surveyName != null  and tSurveyDirectory.surveyName != ''"> and survey_name like concat('%', #{tSurveyDirectory.surveyName}, '%')</if>
+            <if test="tSurveyDirectory.surveyModel != null "> and survey_model = #{tSurveyDirectory.surveyModel}</if>
+            <if test="tSurveyDirectory.surveyState != null "> and survey_state = #{tSurveyDirectory.surveyState}</if>
+        </where>
+    </select>
+
+    <select id="selectTSurveyDirectoryById" parameterType="String" resultMap="TSurveyDirectoryResult">
+        <include refid="selectTSurveyDirectoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTSurveyDirectory" parameterType="TSurveyDirectory">
+        insert into t_survey_directory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="surveyName != null">survey_name,</if>
+            <if test="surveyModel != null">survey_model,</if>
+            <if test="surveyState != null">survey_state,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="sid != null">sid,</if>
+            <if test="anItemLeastNum != null">an_item_least_num,</if>
+            <if test="answerNum != null">answer_num,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="dirType != null">dir_type,</if>
+            <if test="excerptNum != null">excerpt_num,</if>
+            <if test="htmlPath != null">html_path,</if>
+            <if test="jsonPath != null">json_path,</if>
+            <if test="isShare != null">is_share,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="surveyDetailId != null">survey_detail_id,</if>
+            <if test="surveyQuNum != null">survey_qu_num,</if>
+            <if test="surveyTag != null">survey_tag,</if>
+            <if test="viewAnswer != null">view_answer,</if>
+            <if test="visibility != null">visibility,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="surveyName != null">#{surveyName},</if>
+            <if test="surveyModel != null">#{surveyModel},</if>
+            <if test="surveyState != null">#{surveyState},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="sid != null">#{sid},</if>
+            <if test="anItemLeastNum != null">#{anItemLeastNum},</if>
+            <if test="answerNum != null">#{answerNum},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="dirType != null">#{dirType},</if>
+            <if test="excerptNum != null">#{excerptNum},</if>
+            <if test="htmlPath != null">#{htmlPath},</if>
+            <if test="jsonPath != null">#{jsonPath},</if>
+            <if test="isShare != null">#{isShare},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="surveyDetailId != null">#{surveyDetailId},</if>
+            <if test="surveyQuNum != null">#{surveyQuNum},</if>
+            <if test="surveyTag != null">#{surveyTag},</if>
+            <if test="viewAnswer != null">#{viewAnswer},</if>
+            <if test="visibility != null">#{visibility},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSurveyDirectory" parameterType="TSurveyDirectory">
+        update t_survey_directory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyName != null">survey_name = #{surveyName},</if>
+            <if test="surveyModel != null">survey_model = #{surveyModel},</if>
+            <if test="surveyState != null">survey_state = #{surveyState},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="anItemLeastNum != null">an_item_least_num = #{anItemLeastNum},</if>
+            <if test="answerNum != null">answer_num = #{answerNum},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="dirType != null">dir_type = #{dirType},</if>
+            <if test="excerptNum != null">excerpt_num = #{excerptNum},</if>
+            <if test="htmlPath != null">html_path = #{htmlPath},</if>
+            <if test="jsonPath != null">json_path = #{jsonPath},</if>
+            <if test="isShare != null">is_share = #{isShare},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="surveyDetailId != null">survey_detail_id = #{surveyDetailId},</if>
+            <if test="surveyQuNum != null">survey_qu_num = #{surveyQuNum},</if>
+            <if test="surveyTag != null">survey_tag = #{surveyTag},</if>
+            <if test="viewAnswer != null">view_answer = #{viewAnswer},</if>
+            <if test="visibility != null">visibility = #{visibility},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTSurveyDirectoryById" parameterType="String">
+        delete from t_survey_directory where id = #{id}
+    </delete>
+
+    <delete id="deleteTSurveyDirectoryByIds" parameterType="String">
+        delete from t_survey_directory where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
