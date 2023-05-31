@@ -84,7 +84,7 @@ public class TQuRadioServiceImpl extends ServiceImpl<TQuRadioMapper, TQuRadio>  
         entity.setContactsField(contactsField);
 
         Map<String, Object> optionNameMap= WebUtils.getParametersStartingWith(request, "optionValue_");
-        List<TQuRadio> quRadios=new ArrayList<TQuRadio>();
+        List<TQuRadio> quRadios= new ArrayList<>();
         for (String key : optionNameMap.keySet()) {
             String optionId=request.getParameter("optionId_"+key);
             String isNote=request.getParameter("isNote_"+key);
@@ -118,7 +118,7 @@ public class TQuRadioServiceImpl extends ServiceImpl<TQuRadioMapper, TQuRadio>  
 
         //逻辑选项设置
         Map<String, Object> quLogicIdMap = WebUtils.getParametersStartingWith(request, "quLogicId_");
-        List<TQuestionLogic> quLogics = new ArrayList<TQuestionLogic>();
+        List<TQuestionLogic> quLogics = new ArrayList<>();
         for (String key : quLogicIdMap.keySet()) {
             String cgQuItemId = request.getParameter("cgQuItemId_" + key);
             String skQuId = request.getParameter("skQuId_" + key);
