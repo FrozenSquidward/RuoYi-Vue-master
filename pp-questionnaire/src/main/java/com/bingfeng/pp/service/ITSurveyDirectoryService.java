@@ -15,20 +15,20 @@ import com.bingfeng.pp.domain.TSurveyDirectory;
 public interface ITSurveyDirectoryService extends IService<TSurveyDirectory>
 {
     /**
-     * 查询我的问卷
-     *
-     * @param id 我的问卷主键
-     * @return 我的问卷
-     */
-    public TSurveyDirectory selectTSurveyDirectoryById(String id);
-
-    /**
      * 查询我的问卷列表
      *
      * @param tSurveyDirectory 我的问卷
      * @return 我的问卷集合
      */
     public Page<TSurveyDirectory> selectTSurveyDirectoryList(PageDomain page, TSurveyDirectory tSurveyDirectory);
+
+    /**
+     * 查询我的问卷
+     *
+     * @param id 我的问卷主键
+     * @return 我的问卷
+     */
+    public TSurveyDirectory getInfo(String id);
 
     /**
      * 新增我的问卷

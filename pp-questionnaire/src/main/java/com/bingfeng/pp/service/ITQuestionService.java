@@ -25,7 +25,7 @@ public interface ITQuestionService extends IService<TQuestion> {
     /**
      * 保存问卷问题
      */
-    public JSONObject saveQuestion(HttpServletRequest request) throws UnsupportedEncodingException;
+    public JSONObject saveQuestion(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException;
 
     /**
      * 删除问卷问题

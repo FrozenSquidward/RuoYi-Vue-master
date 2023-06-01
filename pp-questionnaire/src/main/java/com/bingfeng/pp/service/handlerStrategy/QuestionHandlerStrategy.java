@@ -14,7 +14,7 @@ public interface QuestionHandlerStrategy {
     /**
      * 更新选项
      * */
-    JSONObject handlerSave(HttpServletRequest request, TQuestion entity) throws UnsupportedEncodingException;
+    JSONObject handlerSave(HttpServletRequest request, String quId, JSONObject jsonObject) throws UnsupportedEncodingException;
 
     /**
      * 删除选项

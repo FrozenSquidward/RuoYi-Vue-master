@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class QuestionConstants {
 
+    /**
+     * 问题ID
+     * */
     public static final String Question_FIELD_QUID = "quId";
     public static final String Question_FIELD_QUTYPE = "quType";
     public static final String Question_FIELD_BELONGID = "belongId";

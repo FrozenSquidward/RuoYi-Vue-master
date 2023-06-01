@@ -2,7 +2,9 @@ package com.bingfeng.pp.domain;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -22,6 +24,7 @@ public class TQuestionLogic extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /** 回答选择题的选项ID（0任意选项） */

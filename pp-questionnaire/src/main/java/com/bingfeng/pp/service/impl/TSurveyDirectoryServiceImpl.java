@@ -23,22 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2023-05-25
  */
 @Service
-public class TSurveyDirectoryServiceImpl extends ServiceImpl<TSurveyDirectoryMapper,TSurveyDirectory> implements ITSurveyDirectoryService
-{
+public class TSurveyDirectoryServiceImpl extends ServiceImpl<TSurveyDirectoryMapper,TSurveyDirectory> implements ITSurveyDirectoryService {
     @Autowired
     private ITSurveyDetailService tSurveyDetailService;
-
-    /**
-     * 查询我的问卷
-     *
-     * @param id 我的问卷主键
-     * @return 我的问卷
-     */
-    @Override
-    public TSurveyDirectory selectTSurveyDirectoryById(String id)
-    {
-        return baseMapper.selectTSurveyDirectoryById(id);
-    }
 
     /**
      * 查询我的问卷列表
@@ -50,6 +37,19 @@ public class TSurveyDirectoryServiceImpl extends ServiceImpl<TSurveyDirectoryMap
     public Page<TSurveyDirectory> selectTSurveyDirectoryList(PageDomain page, TSurveyDirectory tSurveyDirectory)
     {
         return baseMapper.selectTSurveyDirectoryList(new Page<>(page.getPageNum(), page.getPageSize()), tSurveyDirectory);
+    }
+
+    /**
+     * 查询我的问卷
+     *
+     * @param id 我的问卷主键
+     * @return 我的问卷
+     */
+    @Override
+    public TSurveyDirectory getInfo(String id) {
+        TSurveyDirectory byId = getById(id);
+        byId.setSurveyDetail(tSurveyDetailService.getOne(new LambdaQueryWrapper<TSurveyDetail>().eq(TSurveyDetail::getDirId, id)));
+        return byId;
     }
 
     /**
@@ -79,5 +79,6 @@ public class TSurveyDirectoryServiceImpl extends ServiceImpl<TSurveyDirectoryMap
     public void del(String id) {
         removeById(id);
         tSurveyDetailService.remove(new LambdaQueryWrapper<TSurveyDetail>().eq(TSurveyDetail::getDirId, id));
+        // todo 删除问题 合并选项表！！！
     }
 }

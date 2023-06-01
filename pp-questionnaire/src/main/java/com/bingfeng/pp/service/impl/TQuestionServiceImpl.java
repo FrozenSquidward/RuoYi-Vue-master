@@ -1,7 +1,10 @@
 package com.bingfeng.pp.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import com.alibaba.fastjson2.JSONObject;
@@ -20,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bingfeng.pp.mapper.TQuestionMapper;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,18 +58,47 @@ public class TQuestionServiceImpl extends ServiceImpl<TQuestionMapper, TQuestion
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public JSONObject saveQuestion(HttpServletRequest request) throws UnsupportedEncodingException {
-        String quId=request.getParameter(QuestionConstants.Question_FIELD_QUID);
-        TQuestion entity = new TQuestion();
+    public JSONObject saveQuestion(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException {
+        String quId = request.getParameter(QuestionConstants.Question_FIELD_QUID);
+        question.setQuTitle(URLDecoder.decode(question.getQuTitle(),"utf-8"));
         if("".equals(quId)){
-            save(entity);
+            save(question);
         }else {
-            entity = getById(quId);
+            question.setId(quId);
+            updateById(question);
         }
-        entity.setQuType(QuType.valueOf(request.getParameter(QuestionConstants.Question_FIELD_QUTYPE)));
-        JSONObject strategy = questionHandlerStrategyFactory.getStrategySave(request, entity);
-        updateById(entity);
-        return strategy;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", question.getId());
+        jsonObject.put("orderById", question.getOrderById());
+        jsonObject.put("quLogics", saveTQuestionLogic(request, question));
+        return questionHandlerStrategyFactory.getStrategySave(request, question.getId(), question.getQuType(), jsonObject);
+    }
+
+    /**
+     * 逻辑选项设置
+     */
+    private List<TQuestionLogic> saveTQuestionLogic(HttpServletRequest request, TQuestion question){
+        Map<String, Object> quLogicIdMap = WebUtils.getParametersStartingWith(request, "quLogicId_");
+        List<TQuestionLogic> quLogics = new ArrayList<>();
+        for (String key : quLogicIdMap.keySet()) {
+            String cgQuItemId = request.getParameter("cgQuItemId_" + key);
+            String skQuId = request.getParameter("skQuId_" + key);
+            String visibility = request.getParameter("visibility_" + key);
+            String logicType = request.getParameter("logicType_" + key);
+            Object quLogicId = quLogicIdMap.get(key);
+            String quLogicIdValue = (quLogicId != null) ? quLogicId.toString() : null;
+            TQuestionLogic quLogic = new TQuestionLogic();
+            quLogic.setId(quLogicIdValue);
+            quLogic.setCgQuItemId(cgQuItemId);
+            quLogic.setSkQuId(skQuId);
+            quLogic.setVisibility(Integer.parseInt(visibility));
+            quLogic.setTitle(key);
+            quLogic.setLogicType(logicType);
+            quLogic.setCkQuId(question.getId());
+            tQuestionLogicService.saveOrUpdate(quLogic);
+            quLogics.add(quLogic);
+        }
+        return quLogics;
     }
 
     @Override

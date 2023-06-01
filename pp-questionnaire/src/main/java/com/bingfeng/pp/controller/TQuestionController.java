@@ -37,15 +37,15 @@ public class TQuestionController extends BaseController
     private ITQuestionService tQuestionService;
 
     /**
-     * 查询问卷问题列表
+     * 问卷问题保存
      */
     @PostMapping("/save")
-    public JSONObject save(HttpServletRequest request) throws UnsupportedEncodingException {
-        return tQuestionService.saveQuestion(request);
+    public JSONObject save(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException {
+        return tQuestionService.saveQuestion(request, question);
     }
 
     /**
-     * 查询问卷问题列表
+     * 问卷问题删除
      */
     @DeleteMapping("/delete")
     public Boolean delete(String quId) {
@@ -53,14 +53,16 @@ public class TQuestionController extends BaseController
     }
 
     /**
-     * 问题列表
+     * 问卷问题
      */
-    //@PreAuthorize("@ss.hasPermi('pp:question:query')")
     @GetMapping("/surveyAll")
     public R<?> surveyAll(String surveyId, String sid) {
         return R.ok(tQuestionService.surveyAll(surveyId));
     }
 
+    /**
+     * ???
+     * */
     @GetMapping("/config")
     public R<?> config(String surveyId, String sid) {
         ConfigManager instance = ConfigManager.getInstance("dwfile/dwsurvey/" , "" , "/api/dwsurvey/anon/ueditor/config" , "1");

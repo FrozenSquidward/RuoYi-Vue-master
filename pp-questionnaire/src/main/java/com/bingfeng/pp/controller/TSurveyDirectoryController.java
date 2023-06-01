@@ -46,17 +46,17 @@ public class TSurveyDirectoryController extends BaseController
      * 获取我的问卷详细信息
      */
     @PreAuthorize("@ss.hasPermi('pp:directory:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") String id)
+    @GetMapping(value = "/info")
+    public AjaxResult getInfo(String id)
     {
-        return success(tSurveyDirectoryService.selectTSurveyDirectoryById(id));
+        return success(tSurveyDirectoryService.getInfo(id));
     }
 
     /**
      * 新增我的问卷
      */
     @PreAuthorize("@ss.hasPermi('pp:directory:add')")
-    @Log(title = "我的问卷", businessType = BusinessType.INSERT)
+    @Log(title = "新增我的问卷", businessType = BusinessType.INSERT)
     @PostMapping
     public R<?> add(@RequestBody TSurveyDirectory tSurveyDirectory)
     {
@@ -64,10 +64,10 @@ public class TSurveyDirectoryController extends BaseController
     }
 
     /**
-     * 新增我的问卷
+     * 删除问卷
      */
     @PreAuthorize("@ss.hasPermi('pp:directory:remove')")
-    @Log(title = "我的问卷", businessType = BusinessType.INSERT)
+    @Log(title = "删除问卷", businessType = BusinessType.INSERT)
     @DeleteMapping("/{id}")
     public R<?> del(@PathVariable("id") String id)
     {

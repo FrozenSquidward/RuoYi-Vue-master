@@ -7,6 +7,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.bingfeng.pp.goushi.CheckType;
 import com.bingfeng.pp.goushi.QuType;
 import com.bingfeng.pp.goushi.YesnoOption;
 import lombok.Data;
@@ -40,7 +41,7 @@ public class TQuestion extends BaseEntity
     private Integer cellCount;
 
     /** 说明的验证方式 */
-    private Integer checkType;
+    private CheckType checkType;
 
     /** 联系人属性(1:关联到联系人属性,0:不关联到联系人属性) */
     private Integer contactsAttr;

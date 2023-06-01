@@ -7,7 +7,7 @@ import com.bingfeng.pp.domain.TQuOrderby;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 评分题-行选项Mapper接口
+ * 排序题-行选项Mapper接口
  *
  * @author bingfeng
  * @date 2023-05-30

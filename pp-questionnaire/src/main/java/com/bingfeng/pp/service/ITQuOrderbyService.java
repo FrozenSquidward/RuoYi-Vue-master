@@ -7,7 +7,7 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.bingfeng.pp.domain.TQuOrderby;
 
 /**
- * 评分题-行选项Service接口
+ * 排序题-行选项Service接口
  *
  * @author bingfeng
  * @date 2023-05-30

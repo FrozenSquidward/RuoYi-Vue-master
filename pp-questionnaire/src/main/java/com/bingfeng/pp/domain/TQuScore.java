@@ -1,7 +1,8 @@
 package com.bingfeng.pp.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
@@ -16,26 +17,22 @@ public class TQuScore extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /** 选项内容 */
-    @Excel(name = "选项内容")
     private String optionName;
 
     /** 标识 */
-    @Excel(name = "标识")
     private String optionTitle;
 
     /** 排序号 */
-    @Excel(name = "排序号")
-    private Long orderById;
+    private Integer orderById;
 
     /** 所属题 */
-    @Excel(name = "所属题")
     private String quId;
 
     /** 是否显示(0不显示) */
-    @Excel(name = "是否显示(0不显示)")
-    private Long visibility;
+    private Integer visibility;
 
 }
