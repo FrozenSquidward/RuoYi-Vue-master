@@ -47,9 +47,9 @@ public class TSurveyDirectoryController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('pp:directory:query')")
     @GetMapping(value = "/info")
-    public AjaxResult getInfo(String id)
+    public AjaxResult getInfo(String surveyId,String id)
     {
-        return success(tSurveyDirectoryService.getInfo(id));
+        return success(tSurveyDirectoryService.getInfo(surveyId));
     }
 
     /**
@@ -60,7 +60,7 @@ public class TSurveyDirectoryController extends BaseController
     @PostMapping
     public R<?> add(@RequestBody TSurveyDirectory tSurveyDirectory)
     {
-        return R.ok(tSurveyDirectoryService.insertTSurveyDirectory(tSurveyDirectory));
+        return R.ok(tSurveyDirectoryService.add(tSurveyDirectory));
     }
 
     /**

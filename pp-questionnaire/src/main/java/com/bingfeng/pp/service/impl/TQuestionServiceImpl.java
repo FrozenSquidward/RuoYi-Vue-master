@@ -2,10 +2,7 @@ package com.bingfeng.pp.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -55,65 +52,8 @@ public class TQuestionServiceImpl extends ServiceImpl<TQuestionMapper, TQuestion
     private ITQuestionLogicService tQuestionLogicService;
     @Autowired
     private QuestionHandlerStrategyFactory questionHandlerStrategyFactory;
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public JSONObject saveQuestion(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException {
-        String quId = request.getParameter(QuestionConstants.Question_FIELD_QUID);
-        question.setQuTitle(URLDecoder.decode(question.getQuTitle(),"utf-8"));
-        if("".equals(quId)){
-            save(question);
-        }else {
-            question.setId(quId);
-            updateById(question);
-        }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", question.getId());
-        jsonObject.put("orderById", question.getOrderById());
-        jsonObject.put("quLogics", saveTQuestionLogic(request, question));
-        return questionHandlerStrategyFactory.getStrategySave(request, question.getId(), question.getQuType(), jsonObject);
-    }
-
-    /**
-     * 逻辑选项设置
-     */
-    private List<TQuestionLogic> saveTQuestionLogic(HttpServletRequest request, TQuestion question){
-        Map<String, Object> quLogicIdMap = WebUtils.getParametersStartingWith(request, "quLogicId_");
-        List<TQuestionLogic> quLogics = new ArrayList<>();
-        for (String key : quLogicIdMap.keySet()) {
-            String cgQuItemId = request.getParameter("cgQuItemId_" + key);
-            String skQuId = request.getParameter("skQuId_" + key);
-            String visibility = request.getParameter("visibility_" + key);
-            String logicType = request.getParameter("logicType_" + key);
-            Object quLogicId = quLogicIdMap.get(key);
-            String quLogicIdValue = (quLogicId != null) ? quLogicId.toString() : null;
-            TQuestionLogic quLogic = new TQuestionLogic();
-            quLogic.setId(quLogicIdValue);
-            quLogic.setCgQuItemId(cgQuItemId);
-            quLogic.setSkQuId(skQuId);
-            quLogic.setVisibility(Integer.parseInt(visibility));
-            quLogic.setTitle(key);
-            quLogic.setLogicType(logicType);
-            quLogic.setCkQuId(question.getId());
-            tQuestionLogicService.saveOrUpdate(quLogic);
-            quLogics.add(quLogic);
-        }
-        return quLogics;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deleteQuestion(String quId) {
-        TQuestion byId = getById(quId);
-        questionHandlerStrategyFactory.getStrategyDelete(byId);
-        // 重新排序
-        update(new LambdaUpdateWrapper<TQuestion>()
-                .eq(TQuestion::getBelongId, byId.getBelongId())
-                .gt(TQuestion::getOrderById, byId.getOrderById())
-                .setSql("order_by_id = order_by_id - 1"));
-        removeById(quId);
-        return true;
-    }
+    @Autowired
+    private ITQuestionReleasetService tQuestionReleasetService;
 
     @Override
     public TSurveyDirectory surveyAll(String id) {
@@ -180,5 +120,87 @@ public class TQuestionServiceImpl extends ServiceImpl<TQuestionMapper, TQuestion
                 .eq(TQuestionLogic::getCkQuId, quId)
                 .eq(TQuestionLogic::getVisibility, 1));
         question.setQuestionLogics(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public JSONObject saveQuestion(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException {
+        String quId = request.getParameter(QuestionConstants.Question_FIELD_QUID);
+        question.setQuTitle(URLDecoder.decode(question.getQuTitle(),"utf-8"));
+        if("".equals(quId)){
+            save(question);
+        }else {
+            question.setId(quId);
+            updateById(question);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", question.getId());
+        jsonObject.put("orderById", question.getOrderById());
+        jsonObject.put("quLogics", saveTQuestionLogic(request, question));
+        return questionHandlerStrategyFactory.getStrategySave(request, question.getId(), question.getQuType(), jsonObject);
+    }
+
+    /**
+     * 逻辑选项设置
+     */
+    private List<TQuestionLogic> saveTQuestionLogic(HttpServletRequest request, TQuestion question){
+        Map<String, Object> quLogicIdMap = WebUtils.getParametersStartingWith(request, "quLogicId_");
+        List<TQuestionLogic> quLogics = new ArrayList<>();
+        for (String key : quLogicIdMap.keySet()) {
+            String cgQuItemId = request.getParameter("cgQuItemId_" + key);
+            String skQuId = request.getParameter("skQuId_" + key);
+            String visibility = request.getParameter("visibility_" + key);
+            String logicType = request.getParameter("logicType_" + key);
+            Object quLogicId = quLogicIdMap.get(key);
+            String quLogicIdValue = (quLogicId != null) ? quLogicId.toString() : null;
+            TQuestionLogic quLogic = new TQuestionLogic();
+            quLogic.setId(quLogicIdValue);
+            quLogic.setCgQuItemId(cgQuItemId);
+            quLogic.setSkQuId(skQuId);
+            quLogic.setVisibility(Integer.parseInt(visibility));
+            quLogic.setTitle(key);
+            quLogic.setLogicType(logicType);
+            quLogic.setCkQuId(question.getId());
+            tQuestionLogicService.saveOrUpdate(quLogic);
+            quLogics.add(quLogic);
+        }
+        return quLogics;
+    }
+
+    @Override
+    public void releaset(String surveyId) {
+        // 删除旧模型
+        tQuestionReleasetService.remove(new LambdaQueryWrapper<TQuestionReleaset>()
+                .eq(TQuestionReleaset::getBelongId, surveyId));
+        TQuestionReleaset releaset = new TQuestionReleaset();
+        releaset.setBelongId(surveyId);
+        //releaset.setCreateTime(new Date());
+        tQuestionReleasetService.save(releaset);
+        // 更新模型关联
+        TSurveyDirectory directory = new TSurveyDirectory();
+        directory.setSid(releaset.getId());
+        directory.setSurveyState(1);
+        directory.setSurveyTag(1);
+        tSurveyDirectoryService.update(directory, new LambdaQueryWrapper<TSurveyDirectory>()
+                .eq(TSurveyDirectory::getId, surveyId));
+        // 保存新模型
+        TSurveyDirectory toJson = surveyAll(surveyId);
+        releaset.setQuJson(JSONObject.toJSONString(toJson));
+        tQuestionReleasetService.updateById(releaset);
+        // todo 可修改为支持回档
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean deleteQuestion(String quId) {
+        TQuestion byId = getById(quId);
+        questionHandlerStrategyFactory.getStrategyDelete(byId);
+        // 重新排序
+        update(new LambdaUpdateWrapper<TQuestion>()
+                .eq(TQuestion::getBelongId, byId.getBelongId())
+                .gt(TQuestion::getOrderById, byId.getOrderById())
+                .setSql("order_by_id = order_by_id - 1"));
+        removeById(quId);
+        return true;
     }
 }

@@ -37,6 +37,14 @@ public class TQuestionController extends BaseController
     private ITQuestionService tQuestionService;
 
     /**
+     * 问卷问题查询
+     */
+    @GetMapping("/surveyAll")
+    public R<?> surveyAll(String surveyId, String sid) {
+        return R.ok(tQuestionService.surveyAll(surveyId));
+    }
+
+    /**
      * 问卷问题保存
      */
     @PostMapping("/save")
@@ -45,19 +53,20 @@ public class TQuestionController extends BaseController
     }
 
     /**
+     * 问卷问题发布
+     */
+    @PostMapping("/releaset")
+    public R<?> releaset(String surveyId) {
+        tQuestionService.releaset(surveyId);
+        return R.ok();
+    }
+
+    /**
      * 问卷问题删除
      */
     @DeleteMapping("/delete")
     public Boolean delete(String quId) {
         return tQuestionService.deleteQuestion(quId);
-    }
-
-    /**
-     * 问卷问题
-     */
-    @GetMapping("/surveyAll")
-    public R<?> surveyAll(String surveyId, String sid) {
-        return R.ok(tQuestionService.surveyAll(surveyId));
     }
 
     /**

@@ -1,7 +1,5 @@
 package com.bingfeng.pp.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +13,8 @@ import com.bingfeng.pp.mapper.TSurveyDirectoryMapper;
 import com.bingfeng.pp.domain.TSurveyDirectory;
 import com.bingfeng.pp.service.ITSurveyDirectoryService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * 我的问卷Service业务层处理
@@ -60,18 +60,19 @@ public class TSurveyDirectoryServiceImpl extends ServiceImpl<TSurveyDirectoryMap
      */
     @Override
     @Transactional
-    public TSurveyDetail insertTSurveyDirectory(TSurveyDirectory tSurveyDirectory)
+    public TSurveyDirectory add(TSurveyDirectory tSurveyDirectory)
     {
         Long userId = SecurityUtils.getUserId();
         tSurveyDirectory.setDirType(2);
         tSurveyDirectory.setUserId(userId);
+        tSurveyDirectory.setCreateDate(new Date());
         save(tSurveyDirectory);
 
         TSurveyDetail surveyDetail=new TSurveyDetail();
         surveyDetail.setDirId(tSurveyDirectory.getId());
         surveyDetail.setSurveyNote("非常感谢您的参与！如有涉及个人信息，我们将严格保密。");
         tSurveyDetailService.save(surveyDetail);
-        return surveyDetail;
+        return tSurveyDirectory;
     }
 
     @Override

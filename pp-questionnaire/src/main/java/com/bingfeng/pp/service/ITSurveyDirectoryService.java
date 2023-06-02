@@ -36,7 +36,7 @@ public interface ITSurveyDirectoryService extends IService<TSurveyDirectory>
      * @param tSurveyDirectory 我的问卷
      * @return 结果
      */
-    public TSurveyDetail insertTSurveyDirectory(TSurveyDirectory tSurveyDirectory);
+    public TSurveyDirectory add(TSurveyDirectory tSurveyDirectory);
 
     /**
      * 删除我的问卷

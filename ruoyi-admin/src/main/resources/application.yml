@@ -137,3 +137,7 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# pp免校验地址
+pp:
+  permitUrl: /survey/api/*

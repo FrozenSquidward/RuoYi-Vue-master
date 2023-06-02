@@ -8,11 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 
 /**
  * 我的问卷对象 t_survey_directory
@@ -29,15 +25,12 @@ public class TSurveyDirectory extends BaseEntity
     private String id;
 
     /** 问卷名称 */
-    @Excel(name = "问卷名称")
     private String surveyName;
 
     /** 所属模块（1问卷模块） */
-    @Excel(name = "所属模块", readConverterExp = "1=问卷模块")
     private Integer surveyModel;
 
-    /** 问卷状态（0:设计状态 ,1:执行中,2:结束） */
-    @Excel(name = "问卷状态", readConverterExp = "0=:设计状态,,=1:执行中,2:结束")
+    /** 问卷状态（0:设计中,1:收集中,2:结束） */
     private Integer surveyState;
 
     /** 创建者ID */
