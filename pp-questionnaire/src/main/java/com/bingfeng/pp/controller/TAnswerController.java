@@ -18,21 +18,21 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.bingfeng.pp.domain.TAnScore;
-import com.bingfeng.pp.service.ITAnScoreService;
+import com.bingfeng.pp.domain.TAnswer;
+import com.bingfeng.pp.service.ITAnswerService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 评分题Controller
+ * 答卷保存Controller
  *
  * @author bingfeng
- * @date 2023-05-30
+ * @date 2023-06-05
  */
 @RestController
-@RequestMapping("/pp/score")
-public class TAnScoreController extends BaseController {
+@RequestMapping("/pp/answer")
+public class TAnswerController extends BaseController {
     @Autowired
-    private ITAnScoreService tAnScoreService;
+    private ITAnswerService tAnswerService;
 
 }

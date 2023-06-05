@@ -11,7 +11,7 @@ import lombok.Data;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 我的问卷对象 t_survey_directory
+ * 问卷详情
  *
  * @author bingfeng
  * @date 2023-05-25

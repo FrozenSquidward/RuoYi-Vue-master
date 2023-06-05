@@ -7,15 +7,12 @@ import java.util.*;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bingfeng.pp.constants.QuestionConstants;
 import com.bingfeng.pp.domain.*;
 import com.bingfeng.pp.goushi.QuType;
-import com.bingfeng.pp.goushi.QuMap;
 import com.bingfeng.pp.service.*;
 import com.bingfeng.pp.service.handlerStrategy.QuestionHandlerStrategyFactory;
-import com.ruoyi.common.core.page.PageDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bingfeng.pp.mapper.TQuestionMapper;
@@ -126,10 +123,35 @@ public class TQuestionServiceImpl extends ServiceImpl<TQuestionMapper, TQuestion
     @Transactional(rollbackFor = Exception.class)
     public JSONObject saveQuestion(HttpServletRequest request, TQuestion question) throws UnsupportedEncodingException {
         String quId = request.getParameter(QuestionConstants.Question_FIELD_QUID);
-        question.setQuTitle(URLDecoder.decode(question.getQuTitle(),"utf-8"));
+        if(question.getQuTitle()!=null){
+            question.setQuTitle(URLDecoder.decode(question.getQuTitle(),"utf-8"));
+        }
         if("".equals(quId)){
+            question.setCreateDate(new Date());
             save(question);
+            // 重新排序
+            update(new LambdaUpdateWrapper<TQuestion>()
+                    .eq(TQuestion::getBelongId, question.getBelongId())
+                    .ge(TQuestion::getOrderById, question.getOrderById())
+                    .setSql("order_by_id = order_by_id + 1"));
         }else {
+            // 排序策略 1.排序未调整的,不动;
+            TQuestion byId = getById(quId);
+            // 2.排序向前的;
+            if (byId.getOrderById() > question.getOrderById()){
+                update(new LambdaUpdateWrapper<TQuestion>()
+                        .eq(TQuestion::getBelongId, byId.getBelongId())
+                        .ge(TQuestion::getOrderById, question.getOrderById())
+                        .lt(TQuestion::getOrderById, byId.getOrderById())
+                        .setSql("order_by_id = order_by_id + 1"));
+            // 3.排序向后的;
+            }else if (byId.getOrderById() < question.getOrderById()){
+                update(new LambdaUpdateWrapper<TQuestion>()
+                        .eq(TQuestion::getBelongId, byId.getBelongId())
+                        .gt(TQuestion::getOrderById, byId.getOrderById())
+                        .le(TQuestion::getOrderById, question.getOrderById())
+                        .setSql("order_by_id = order_by_id - 1"));
+            }
             question.setId(quId);
             updateById(question);
         }

@@ -9,7 +9,7 @@ import lombok.Data;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 具体的一次调查对象 t_survey_detail
+ * 问卷校验规则
  *
  * @author bingfeng
  * @date 2023-05-26

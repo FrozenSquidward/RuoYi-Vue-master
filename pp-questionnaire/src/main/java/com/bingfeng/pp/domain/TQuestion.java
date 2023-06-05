@@ -130,27 +130,7 @@ public class TQuestion extends BaseEntity
     //删除的ID
     @TableField(exist = false)
     private String[] removeOptionUuIds=null;
-    //题答卷
-    @TableField(exist = false)
-    private TAnAnswer anAnswer;
-    @TableField(exist = false)
-    private List<TAnCheckbox> anCheckboxs;
-    @TableField(exist = false)
-    private List<TAnDfillblank> anDFillblanks;
-    @TableField(exist = false)
-    private List<TAnEnumqu> anEnumqus;
-    @TableField(exist = false)
-    private TAnFillblank anFillblank;
-    @TableField(exist = false)
-    private TAnRadio anRadio;
-    @TableField(exist = false)
-    private TAnYesno anYesno;
-    @TableField(exist = false)
-    private List<TAnScore> anScores;
-    @TableField(exist = false)
-    private Integer anCount=0;
-    @TableField(exist = false)
-    private List<TAnOrder> anOrders;
+
     //逻辑设置
     @TableField(exist = false)
     private List<TQuestionLogic> questionLogics;

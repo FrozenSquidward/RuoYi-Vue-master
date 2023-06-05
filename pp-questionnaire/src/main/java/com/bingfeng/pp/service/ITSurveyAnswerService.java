@@ -4,14 +4,14 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.common.core.page.PageDomain;
-import com.bingfeng.pp.domain.TAnOrder;
+import com.bingfeng.pp.domain.TSurveyAnswer;
 
 /**
- * 评分题?Service接口
+ * 回答者-调查回馈信息Service接口
  *
  * @author bingfeng
- * @date 2023-05-30
+ * @date 2023-06-05
  */
-public interface ITAnOrderService extends IService<TAnOrder> {
+public interface ITSurveyAnswerService extends IService<TSurveyAnswer> {
 
 }
