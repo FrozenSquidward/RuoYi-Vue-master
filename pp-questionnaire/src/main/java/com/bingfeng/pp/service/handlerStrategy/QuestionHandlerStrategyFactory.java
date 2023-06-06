@@ -21,7 +21,7 @@ public class QuestionHandlerStrategyFactory {
     private List<QuestionHandlerStrategy> questionHandlerStrategies;
 
     /**
-     * 保存选项
+     * 保存选项策略
      * */
     public JSONObject getStrategySave(HttpServletRequest request, String quId, QuType quType, JSONObject jsonObject) throws UnsupportedEncodingException {
         Optional<QuestionHandlerStrategy> first = questionHandlerStrategies.stream().filter(l -> l.getQuType().equals(quType)).findFirst();
