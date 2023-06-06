@@ -11,6 +11,7 @@ import com.bingfeng.pp.goushi.QuType;
 import com.bingfeng.pp.service.ITSurveyAnswerService;
 import com.bingfeng.pp.service.ITSurveyDetailService;
 import com.bingfeng.pp.service.ITSurveyDirectoryService;
+import com.ruoyi.common.utils.ip.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bingfeng.pp.mapper.TAnswerMapper;
@@ -41,6 +42,8 @@ public class TAnswerServiceImpl extends ServiceImpl<TAnswerMapper, TAnswer>  imp
         TSurveyDirectory byId = tSurveyDirectoryService.getById(surveyId);
         JSONObject quMaps = buildSaveSurveyMap(request);
         System.out.println(quMaps);
+        String ip = IpUtils.getIpAddr();
+        System.out.println(ip);
     }
 
 
