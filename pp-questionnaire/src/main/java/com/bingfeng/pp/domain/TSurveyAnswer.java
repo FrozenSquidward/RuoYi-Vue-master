@@ -1,6 +1,9 @@
 package com.bingfeng.pp.domain;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -20,6 +23,7 @@ public class TSurveyAnswer extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /** 答卷ID */
