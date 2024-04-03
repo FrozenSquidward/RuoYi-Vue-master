@@ -2,6 +2,7 @@ package com.bingfeng.pp.service.handlerStrategy;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.bingfeng.pp.domain.TQuestion;
+import com.bingfeng.pp.domain.vo.OptionsVo;
 import com.bingfeng.pp.goushi.QuType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,11 +35,19 @@ public class QuestionHandlerStrategyFactory {
     }
 
     /**
-     * 删除选项
+     * 删除问题
      * */
     public void getStrategyDelete(TQuestion entity) {
         Optional<QuestionHandlerStrategy> first = questionHandlerStrategies.stream().filter(l -> l.getQuType().equals(entity.getQuType())).findFirst();
         // todo 类似填空题没有选项表，这里选项表大同小异，后续可合并处理
         first.ifPresent(questionHandlerStrategy -> questionHandlerStrategy.handlerDelete(entity.getId()));
+    }
+
+    /**
+     * 删除选项
+     * */
+    public void getStrategyDeleteOptions(OptionsVo optionsDTO) {
+        Optional<QuestionHandlerStrategy> first = questionHandlerStrategies.stream().filter(l -> l.getQuType().equals(optionsDTO.getQuType())).findFirst();
+        first.ifPresent(questionHandlerStrategy -> questionHandlerStrategy.handlerDeleteOptions(optionsDTO.getId()));
     }
 }

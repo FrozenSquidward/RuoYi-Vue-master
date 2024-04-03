@@ -17,7 +17,12 @@ public interface QuestionHandlerStrategy {
     JSONObject handlerSave(HttpServletRequest request, String quId, JSONObject jsonObject) throws UnsupportedEncodingException;
 
     /**
-     * 删除选项
+     * 删除所有选项
      * */
     void handlerDelete(String quId);
+
+    /**
+     * 删除指定选项
+     * */
+    void handlerDeleteOptions(String id);
 }

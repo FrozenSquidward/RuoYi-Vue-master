@@ -38,5 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tSurveyDirectory.surveyModel != null "> and survey_model = #{tSurveyDirectory.surveyModel}</if>
             <if test="tSurveyDirectory.surveyState != null "> and survey_state = #{tSurveyDirectory.surveyState}</if>
         </where>
+        order by create_date desc
     </select>
 </mapper>

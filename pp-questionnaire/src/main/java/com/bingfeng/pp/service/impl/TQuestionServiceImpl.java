@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bingfeng.pp.constants.QuestionConstants;
 import com.bingfeng.pp.domain.*;
+import com.bingfeng.pp.domain.vo.OptionsVo;
 import com.bingfeng.pp.goushi.QuType;
 import com.bingfeng.pp.service.*;
 import com.bingfeng.pp.service.handlerStrategy.QuestionHandlerStrategyFactory;
@@ -223,6 +224,12 @@ public class TQuestionServiceImpl extends ServiceImpl<TQuestionMapper, TQuestion
                 .gt(TQuestion::getOrderById, byId.getOrderById())
                 .setSql("order_by_id = order_by_id - 1"));
         removeById(quId);
+        return true;
+    }
+
+    @Override
+    public Boolean deleteQuestionOptions(OptionsVo vo) {
+        questionHandlerStrategyFactory.getStrategyDeleteOptions(vo);
         return true;
     }
 }

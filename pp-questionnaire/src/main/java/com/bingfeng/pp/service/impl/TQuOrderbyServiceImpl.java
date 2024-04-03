@@ -68,4 +68,9 @@ public class TQuOrderbyServiceImpl extends ServiceImpl<TQuOrderbyMapper, TQuOrde
     public void handlerDelete(String quId) {
         remove(new LambdaQueryWrapper<TQuOrderby>().eq(TQuOrderby::getQuId, quId));
     }
+
+    @Override
+    public void handlerDeleteOptions(String id) {
+        removeById(id);
+    }
 }

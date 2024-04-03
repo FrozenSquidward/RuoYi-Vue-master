@@ -81,4 +81,9 @@ public class TQuRadioServiceImpl extends ServiceImpl<TQuRadioMapper, TQuRadio>  
     public void handlerDelete(String quId) {
         remove(new LambdaQueryWrapper<TQuRadio>().eq(TQuRadio::getQuId, quId));
     }
+
+    @Override
+    public void handlerDeleteOptions(String id) {
+        removeById(id);
+    }
 }

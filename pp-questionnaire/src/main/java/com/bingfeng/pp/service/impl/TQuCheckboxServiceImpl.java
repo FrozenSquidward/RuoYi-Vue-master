@@ -77,4 +77,9 @@ public class TQuCheckboxServiceImpl extends ServiceImpl<TQuCheckboxMapper, TQuCh
     public void handlerDelete(String quId) {
         remove(new LambdaQueryWrapper<TQuCheckbox>().eq(TQuCheckbox::getQuId, quId));
     }
+
+    @Override
+    public void handlerDeleteOptions(String id) {
+        removeById(id);
+    }
 }

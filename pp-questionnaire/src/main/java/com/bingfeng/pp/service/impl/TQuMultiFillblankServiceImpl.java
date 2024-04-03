@@ -66,4 +66,9 @@ public class TQuMultiFillblankServiceImpl extends ServiceImpl<TQuMultiFillblankM
     public void handlerDelete(String quId) {
         remove(new LambdaQueryWrapper<TQuMultiFillblank>().eq(TQuMultiFillblank::getQuId, quId));
     }
+
+    @Override
+    public void handlerDeleteOptions(String id) {
+        removeById(id);
+    }
 }

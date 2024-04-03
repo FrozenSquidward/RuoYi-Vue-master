@@ -65,4 +65,9 @@ public class TQuScoreServiceImpl extends ServiceImpl<TQuScoreMapper, TQuScore>  
     public void handlerDelete(String quId) {
         remove(new LambdaQueryWrapper<TQuScore>().eq(TQuScore::getQuId, quId));
     }
+
+    @Override
+    public void handlerDeleteOptions(String id) {
+        removeById(id);
+    }
 }

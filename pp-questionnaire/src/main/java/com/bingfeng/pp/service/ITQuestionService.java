@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bingfeng.pp.domain.TSurveyDirectory;
 import com.bingfeng.pp.domain.TQuestion;
+import com.bingfeng.pp.domain.vo.OptionsVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,4 +38,8 @@ public interface ITQuestionService extends IService<TQuestion> {
      * */
     public Boolean deleteQuestion(String quId);
 
+    /**
+     * 删除问卷问题选项
+     * */
+    public Boolean deleteQuestionOptions(OptionsVo vo);
 }
