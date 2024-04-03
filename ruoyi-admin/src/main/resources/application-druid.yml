@@ -6,11 +6,11 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: mpw:VEN/z2ixmJ8Yo2BI9PD8yYbGbPG5jeB78gekXZ/ZDC7L3HXEMMJUs68ngrionnYITknXyDRGhHJjEW+zxMqzPGF8BuLE+jn1hosFxcD0N/gS4AXz1iPY30CXrZ1z5P2K7KFvqES6EF+ikrtaGkhfijDeNtu+y6frZ2aAFqTNkn7Q8TK9l8KBaSH6svXz49MOaj+bc2WKHJzBnV0WmKNt3UTNxdOfPfIau3qUdFVp5MbeWey8NreenLM0lxJw1paapQXXgzv5MXqQ8pmNQUniPA==
-                username: mpw:OVFcWooqzJlOKz9FEt9pMA==
-                password: mpw:/uoF5OMnCyxoBFhwNFpWFA==
-                driver-class-name: com.mysql.jdbc.Driver
-                type: com.alibaba.druid.pool.DruidDataSource
+#                url: mpw:VEN/z2ixmJ8Yo2BI9PD8yYbGbPG5jeB78gekXZ/ZDC7L3HXEMMJUs68ngrionnYITknXyDRGhHJjEW+zxMqzPGF8BuLE+jn1hosFxcD0N/gS4AXz1iPY30CXrZ1z5P2K7KFvqES6EF+ikrtaGkhfijDeNtu+y6frZ2aAFqTNkn7Q8TK9l8KBaSH6svXz49MOaj+bc2WKHJzBnV0WmKNt3UTNxdOfPfIau3qUdFVp5MbeWey8NreenLM0lxJw1paapQXXgzv5MXqQ8pmNQUniPA==
+#                username: mpw:OVFcWooqzJlOKz9FEt9pMA==
+#                password: mpw:/uoF5OMnCyxoBFhwNFpWFA==
+#                driver-class-name: com.mysql.jdbc.Driver
+#                type: com.alibaba.druid.pool.DruidDataSource
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
